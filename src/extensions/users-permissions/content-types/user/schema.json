@@ -70,6 +70,97 @@
     },
     "prueba": {
       "type": "text"
+    },
+    "id_stripe": {
+      "type": "string"
+    },
+    "fecha_registro": {
+      "type": "datetime"
+    },
+    "membresia_vigente": {
+      "type": "boolean"
+    },
+    "tipo_membresia": {
+      "type": "enumeration",
+      "enum": [
+        "mensual",
+        "semestral",
+        "anual",
+        "preferente"
+      ]
+    },
+    "fecha_nacimiento": {
+      "type": "datetime"
+    },
+    "fecha_membresia": {
+      "type": "datetime"
+    },
+    "telefono": {
+      "type": "string"
+    },
+    "cp": {
+      "type": "string"
+    },
+    "ine_frente": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ine_tras": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "foto_credencial": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "nombre_completo": {
+      "type": "string"
+    },
+    "fecha_fin_membresia_actual": {
+      "type": "date"
+    },
+    "stripeCustomerId": {
+      "type": "string"
+    },
+    "stripeSubscriptionId": {
+      "type": "string"
+    },
+    "stripePriceId": {
+      "type": "string"
+    },
+    "subscriptionStatus": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "canceled",
+        "incomplete"
+      ]
+    },
+    "direcciones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::direccion.direccion"
     }
   }
 }
