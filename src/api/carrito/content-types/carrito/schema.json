@@ -49,6 +49,9 @@
     },
     "agrupacion_de_envios": {
       "type": "json"
+    },
+    "usuario_email": {
+      "type": "string"
     }
   }
 }

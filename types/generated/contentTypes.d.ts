@@ -866,6 +866,7 @@ export interface ApiCarritoCarrito extends Schema.CollectionType {
     >;
     total_envios: Attribute.Decimal;
     agrupacion_de_envios: Attribute.JSON;
+    usuario_email: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

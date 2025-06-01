@@ -65,7 +65,8 @@ module.exports = {
       largo = 1,
       ancho = 1,
       alto = 1,
-      peso = 1
+      peso = 1,
+      cantidad = 1
     } = ctx.request.body;
 
     const estadoOrigen = await obtenerEstadoPorCP(cp_origen);
@@ -78,8 +79,11 @@ module.exports = {
     const regionOrigen = getRegion(estadoOrigen);
     const regionDestino = getRegion(estadoDestino);
 
-    const pesoVol = calcularPesoVolumetrico(largo, ancho, alto);
-    const pesoCobrado = calcularPesoCobrado(peso, pesoVol);
+    const pesoVolUnitario = calcularPesoVolumetrico(largo, ancho, alto);
+    const pesoVolTotal = pesoVolUnitario * cantidad;
+    const pesoRealTotal = peso * cantidad;
+
+    const pesoCobrado = calcularPesoCobrado(pesoRealTotal, pesoVolTotal);
 
     const costo = estimarCostoEnvio(regionOrigen, regionDestino, pesoCobrado);
 
