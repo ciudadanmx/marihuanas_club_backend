@@ -66,7 +66,7 @@ module.exports = {
       ancho = 1,
       alto = 1,
       peso = 1,
-      cantidad = 1
+      cantidad = 5,
     } = ctx.request.body;
 
     const estadoOrigen = await obtenerEstadoPorCP(cp_origen);

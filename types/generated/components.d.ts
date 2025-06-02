@@ -22,6 +22,10 @@ export interface CarritosProductoEnCarrito extends Schema.Component {
     esquema_impuestos: Attribute.Enumeration<
       ['sin_iva', 'con_iva', 'optativo']
     >;
+    cp: Attribute.String;
+    total: Attribute.Decimal;
+    comisionStripe: Attribute.Decimal;
+    comisionPlataforma: Attribute.Decimal;
   };
 }
 

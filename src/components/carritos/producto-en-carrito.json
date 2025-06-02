@@ -37,6 +37,18 @@
         "con_iva",
         "optativo"
       ]
+    },
+    "cp": {
+      "type": "string"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "comisionStripe": {
+      "type": "decimal"
+    },
+    "comisionPlataforma": {
+      "type": "decimal"
     }
   }
 }
