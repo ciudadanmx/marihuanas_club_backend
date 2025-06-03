@@ -1,9 +1,12 @@
-'use strict';
-
-/**
- * carrito router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::carrito.carrito');
+module.exports = {
+  routes: [
+    {
+      method: 'DELETE',
+      path: '/carrito/clear/:email',
+      handler: 'carrito.clearCartByUserEmail',
+      config: {
+        auth: false, // cámbialo a true si usas JWT
+      },
+    },
+  ],
+};
