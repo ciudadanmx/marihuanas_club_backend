@@ -49,6 +49,22 @@
     },
     "comisionPlataforma": {
       "type": "decimal"
+    },
+    "imagen_predeterminada": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "store": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::store.store"
     }
   }
 }

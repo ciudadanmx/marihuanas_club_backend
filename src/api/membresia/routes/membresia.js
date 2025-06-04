@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * carrito router
+ * membresia router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::carrito.carrito');
+module.exports = createCoreRouter('api::membresia.membresia');

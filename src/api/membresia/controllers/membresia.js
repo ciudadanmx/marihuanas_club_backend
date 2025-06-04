@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * carrito controller
+ * membresia controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::carrito.carrito');
+module.exports = createCoreController('api::membresia.membresia');

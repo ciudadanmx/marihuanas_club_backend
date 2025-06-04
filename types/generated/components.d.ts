@@ -26,6 +26,14 @@ export interface CarritosProductoEnCarrito extends Schema.Component {
     total: Attribute.Decimal;
     comisionStripe: Attribute.Decimal;
     comisionPlataforma: Attribute.Decimal;
+    imagen_predeterminada: Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    store: Attribute.Relation<
+      'carritos.producto-en-carrito',
+      'oneToOne',
+      'api::store.store'
+    >;
   };
 }
 

@@ -1739,6 +1739,48 @@ export interface ApiListaSuscripcionListaSuscripcion
   };
 }
 
+export interface ApiMembresiaMembresia extends Schema.CollectionType {
+  collectionName: 'membresias';
+  info: {
+    singularName: 'membresia';
+    pluralName: 'membresias';
+    displayName: 'Membres\u00EDas';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    usuario: Attribute.Relation<
+      'api::membresia.membresia',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    fechaInicio: Attribute.Date;
+    fechaFin: Attribute.Date;
+    plan: Attribute.Enumeration<['mensual,', 'semestreal,', 'anual']>;
+    monto_pagado: Attribute.Decimal;
+    activa: Attribute.Boolean;
+    miembroDesde: Attribute.DateTime;
+    observaciones: Attribute.String;
+    status: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::membresia.membresia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::membresia.membresia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMessageMessage extends Schema.CollectionType {
   collectionName: 'messages';
   info: {
@@ -2473,6 +2515,7 @@ declare module '@strapi/types' {
       'api::evento.evento': ApiEventoEvento;
       'api::gen-wallet.gen-wallet': ApiGenWalletGenWallet;
       'api::lista-suscripcion.lista-suscripcion': ApiListaSuscripcionListaSuscripcion;
+      'api::membresia.membresia': ApiMembresiaMembresia;
       'api::message.message': ApiMessageMessage;
       'api::notificacion.notificacion': ApiNotificacionNotificacion;
       'api::pago.pago': ApiPagoPago;
