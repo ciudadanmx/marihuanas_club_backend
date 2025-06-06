@@ -71,6 +71,14 @@ module.exports = {
         id: user.id,
       });
 
+      ctx.cookies.set('token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // true en producción
+  sameSite: 'lax', // o 'none' si usas HTTPS y dominios distintos
+  path: '/',
+  maxAge: 1000 * 60 * 60 * 24, // 1 día
+});
+
       ctx.send({
         jwt: token,
         user,

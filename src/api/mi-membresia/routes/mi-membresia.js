@@ -3,9 +3,9 @@ module.exports = {
     {
       method: 'GET',
       path: '/mi-membresia',
-      handler: 'membresia.estado', // <-- Apunta al controller
+      handler: 'mi-membresia.estado',
       config: {
-        policies: ['global::isAuthenticated'],
+        
       },
     },
   ],

@@ -1,4 +1,5 @@
-// src/middlewares/auth.js
+'use strict';
+
 const jwksRsa = require('jwks-rsa');
 const jwt = require('jsonwebtoken');
 const { get } = require('lodash');
@@ -15,45 +16,88 @@ const getKey = (header, callback) => {
       console.error('Error obteniendo la clave:', err);
       callback(err);
     } else {
-      const signingKey = key.getPublicKey();
-      callback(null, signingKey);
+      callback(null, key.getPublicKey());
     }
   });
 };
 
-module.exports = (options, { strapi }) => {
-  return async (ctx, next) => {
-    const token = get(ctx.request.headers, 'authorization', '').replace('Bearer ', '');
-    console.log('Token recibido:', token); // Depuración
+module.exports = {
+  async estado(ctx) {
+    // 1. Extrae el token del header o de la cookie
+    const token =
+      get(ctx.request.headers, 'authorization', '').replace('Bearer ', '') ||
+      ctx.cookies.get('token');
+
+    console.log('Token recibido en mi-membresia:', token);
 
     if (!token) {
-      console.log('No token provided');
+      console.log('⚠️ [mi-membresia] No token provided');
       return ctx.unauthorized('No token provided');
     }
 
+    // 2. Verifica el JWT usando JWKS
+    let decoded;
     try {
-      // Verifica el token usando la clave pública obtenida de JWKS
-      const decoded = await new Promise((resolve, reject) => {
-        jwt.verify(token, getKey, {
-          audience: 'za265MeRdxMKuPqzdPSTL7lHL0yyg5bd',
-          issuer: 'https://ciudadan.us.auth0.com/',
-        }, (err, decoded) => {
-          if (err) {
-            console.error('Error verificando el token:', err);
-            reject(err);
-          } else {
-            resolve(decoded);
+      decoded = await new Promise((resolve, reject) => {
+        jwt.verify(
+          token,
+          getKey,
+          {
+            audience: 'za265MeRdxMKuPqzdPSTL7lHL0yyg5bd',
+            issuer: 'https://ciudadan.us.auth0.com/',
+          },
+          (err, decodedToken) => {
+            if (err) {
+              console.error('Error verificando el token:', err);
+              reject(err);
+            } else {
+              resolve(decodedToken);
+            }
           }
-        });
+        );
       });
-
-      ctx.state.user = decoded; // Guarda la información del usuario en ctx.state
-      console.log('Usuario decodificado:', decoded); // Depuración
+      console.log('✅ [mi-membresia] Usuario decodificado:', decoded);
     } catch (err) {
-      console.error('Error verificando el token:', err);
+      console.error('❌ [mi-membresia] JWT Verification Failed:', err);
       return ctx.unauthorized('Invalid token');
     }
 
-    await next();
-  };
+    // 3. Guarda la info del usuario en ctx.state.user
+    ctx.state.user = decoded;
+
+    // 4. Continúa con la lógica de búsqueda de membresía
+    console.log('🔍 [mi-membresia] Entró a controller.estado');
+    const userId = ctx.state.user.id; // O decoded.sub, según tu payload
+    if (!userId) {
+      console.log('⚠️ [mi-membresia] Usuario no autenticado después de decode');
+      return ctx.unauthorized('No autenticado');
+    }
+
+    console.log(`🔍 [mi-membresia] Buscando membresía para user.id=${userId}`);
+    const membresia = await strapi.db.query('api::membresia.membresia').findOne({
+      where: {
+        usuario: userId,
+        fechaFin: { $gte: new Date() },
+      },
+      populate: ['usuario'],
+      orderBy: { fechaFin: 'desc' },
+    });
+
+    if (!membresia) {
+      console.log('ℹ️ [mi-membresia] No hay membresía activa');
+      return ctx.send({ activo: false });
+    }
+
+    console.log('✅ [mi-membresia] Se encontró membresía activa:', membresia);
+    return ctx.send({
+      activo: true,
+      tipo: membresia.tipo,
+      fechaInicio: membresia.fechaInicio,
+      fechaFin: membresia.fechaFin,
+      usuario: {
+        id: membresia.usuario.id,
+        email: membresia.usuario.email,
+      },
+    });
+  },
 };
