@@ -924,6 +924,40 @@ export interface ApiCarteraCartera extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategoriaContenidoCategoriaContenido
+  extends Schema.CollectionType {
+  collectionName: 'categorias_contenidos';
+  info: {
+    singularName: 'categoria-contenido';
+    pluralName: 'categorias-contenidos';
+    displayName: 'Categorias_Contenidos';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nombre: Attribute.String;
+    activa: Attribute.Boolean;
+    imagen: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    slug: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::categoria-contenido.categoria-contenido',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::categoria-contenido.categoria-contenido',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCategoriaCursoCategoriaCurso extends Schema.CollectionType {
   collectionName: 'categorias_cursos';
   info: {
@@ -1337,6 +1371,7 @@ export interface ApiContenidoContenido extends Schema.CollectionType {
     singularName: 'contenido';
     pluralName: 'contenidos';
     displayName: 'Contenidos';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1365,6 +1400,11 @@ export interface ApiContenidoContenido extends Schema.CollectionType {
     tags: Attribute.Text;
     fecha_publicacion: Attribute.DateTime;
     resumen: Attribute.String;
+    categoria: Attribute.Relation<
+      'api::contenido.contenido',
+      'oneToOne',
+      'api::categoria-contenido.categoria-contenido'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -2499,6 +2539,7 @@ declare module '@strapi/types' {
       'api::a.a': ApiAA;
       'api::carrito.carrito': ApiCarritoCarrito;
       'api::cartera.cartera': ApiCarteraCartera;
+      'api::categoria-contenido.categoria-contenido': ApiCategoriaContenidoCategoriaContenido;
       'api::categoria-curso.categoria-curso': ApiCategoriaCursoCategoriaCurso;
       'api::categoria-enlace.categoria-enlace': ApiCategoriaEnlaceCategoriaEnlace;
       'api::categoria-evento.categoria-evento': ApiCategoriaEventoCategoriaEvento;

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "contenido",
     "pluralName": "contenidos",
-    "displayName": "Contenidos"
+    "displayName": "Contenidos",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -40,34 +41,37 @@
       ]
     },
     "portada": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "galeria_libre": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "galeria_restringida": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "tags": {
       "type": "text"
@@ -77,6 +81,11 @@
     },
     "resumen": {
       "type": "string"
+    },
+    "categoria": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::categoria-contenido.categoria-contenido"
     }
   }
 }
