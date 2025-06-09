@@ -1,3 +1,5 @@
+// config/middlewares.js
+
 module.exports = [
   'strapi::errors',
   {
@@ -11,11 +13,28 @@ module.exports = [
   'strapi::poweredBy',
   'strapi::logger',
   'strapi::query',
+
+  // Body parser configurado para peticiones grandes
   {
-    name: 'global::raw-body',
-    config: {},
+    name: 'strapi::body',
+    config: {
+      jsonLimit: '150mb',      // Límite para JSON
+      formLimit: '150mb',      // Límite para urlencoded
+      textLimit: '150mb',      // Límite para texto plano
+      multipart: true,        // Habilita multipart/form-data
+      parser: {
+        enabled: true,
+        multipart: true,
+      },
+      // Opcional: límites específicos de busboy para archivos
+      busboyConfig: {
+        limits: {
+          fileSize: 100 * 1024 * 1024, // 100 MB por archivo
+        },
+      },
+    },
   },
-  'strapi::body',
+
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
