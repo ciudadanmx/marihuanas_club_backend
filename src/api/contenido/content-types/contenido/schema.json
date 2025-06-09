@@ -86,6 +86,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::categoria-contenido.categoria-contenido"
+    },
+    "autor_email": {
+      "type": "string"
+    },
+    "autor_nombre": {
+      "type": "string"
     }
   }
 }

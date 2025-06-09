@@ -1407,6 +1407,8 @@ export interface ApiContenidoContenido extends Schema.CollectionType {
       'oneToOne',
       'api::categoria-contenido.categoria-contenido'
     >;
+    autor_email: Attribute.String;
+    autor_nombre: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -14,23 +14,19 @@ module.exports = [
   'strapi::logger',
   'strapi::query',
 
-  // Body parser configurado para peticiones grandes
+  // Body parser configurado para peticiones grandes y multipart
   {
     name: 'strapi::body',
     config: {
-      jsonLimit: '150mb',      // Límite para JSON
-      formLimit: '150mb',      // Límite para urlencoded
-      textLimit: '150mb',      // Límite para texto plano
-      multipart: true,        // Habilita multipart/form-data
-      parser: {
-        enabled: true,
-        multipart: true,
-      },
-      // Opcional: límites específicos de busboy para archivos
-      busboyConfig: {
-        limits: {
-          fileSize: 100 * 1024 * 1024, // 100 MB por archivo
-        },
+      // Límites para JSON / urlencoded / text
+      jsonLimit: '200mb',    // cambia al valor que necesites
+      formLimit: '200mb',
+      textLimit: '200mb',
+      // multipart/form-data (imágenes, etc.)
+      multipart: true,
+      formidable: {
+        // tamaño máximo por archivo en bytes
+        maxFileSize: 200 * 1024 * 1024, // 200 MB
       },
     },
   },
