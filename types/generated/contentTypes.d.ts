@@ -931,6 +931,7 @@ export interface ApiCategoriaContenidoCategoriaContenido
     singularName: 'categoria-contenido';
     pluralName: 'categorias-contenidos';
     displayName: 'Categorias_Contenidos';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -940,6 +941,7 @@ export interface ApiCategoriaContenidoCategoriaContenido
     activa: Attribute.Boolean;
     imagen: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     slug: Attribute.String;
+    descripcion: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "categoria-contenido",
     "pluralName": "categorias-contenidos",
-    "displayName": "Categorias_Contenidos"
+    "displayName": "Categorias_Contenidos",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,16 +19,20 @@
       "type": "boolean"
     },
     "imagen": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "slug": {
+      "type": "string"
+    },
+    "descripcion": {
       "type": "string"
     }
   }
